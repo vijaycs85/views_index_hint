@@ -3,7 +3,7 @@
 /**
  * Implement hook_views_pre_execute().
  */
-function views_indexhint_views_pre_execute(&$view) {
+function views_index_hint_views_pre_execute(&$view) {
   if ($index = $view->display_handler->get_option('index_hint')) {
     $query = &$view->build_info['query'];
     $search = 'FROM {'. $view->base_table .'} '. $view->base_table;
@@ -17,7 +17,7 @@ function views_indexhint_views_pre_execute(&$view) {
  * Implement hook_form_alter().
  * Add Lite pager option to Views UI
  */
-function views_indexhint_form_alter(&$form, &$form_state, $form_id) {
+function views_index_hint_form_alter(&$form, &$form_state, $form_id) {
   if ($form_id == 'views_ui_edit_display_form' && $form_state['section'] == 'index_hint') {
     $view = &$form_state['view'];
     $display_id = $form_state['display_id'];
@@ -34,15 +34,15 @@ function views_indexhint_form_alter(&$form, &$form_state, $form_id) {
       '#default_value' => $display->handler->get_option('index_hint'),
       '#weight' => -10,
     );
-    $form['buttons']['submit']['#submit'][] = 'views_indexhint_display_form_submit';
-    //$form['buttons']['submit']['#validate'][] = 'views_indexhint_display_form_validate';
+    $form['buttons']['submit']['#submit'][] = 'views_index_hint_display_form_submit';
+    //$form['buttons']['submit']['#validate'][] = 'views_index_hint_display_form_validate';
   }
 }
 
 /**
  * Callback to validate the Index Hint form field
  */
-function views_indexhint_display_form_validate($form, &$form_state) {
+function views_index_hint_display_form_validate($form, &$form_state) {
   // As a precaution, don't allow malicious characters or keywords to be used
   if (preg_match('/UNION|SELECT|UPDATE|INSERT|DELETE|[;\\G]/i', $form_state['values']['index_hint'], $matches)) {
     form_error($form['index_hint'], 'Index hint contains illegal characters');
@@ -52,7 +52,7 @@ function views_indexhint_display_form_validate($form, &$form_state) {
 /**
  * Callback to save the Index Hint form field
  */
-function views_indexhint_display_form_submit($form, &$form_state) {
+function views_index_hint_display_form_submit($form, &$form_state) {
   $view = &$form_state['view'];
   // The handler was unset previously so we need to set it again
   $view->set_display($form_state['display_id']);
@@ -65,7 +65,7 @@ function views_indexhint_display_form_submit($form, &$form_state) {
  * Implement module_preprocess_hook().
  * Add Index Hint to the View Edit UI
  */
-function views_indexhint_preprocess_views_ui_edit_tab(&$vars) {
+function views_index_hint_preprocess_views_ui_edit_tab(&$vars) {
   $id = 'index_hint';
   $view = $vars['view'];
   $display = $vars['display'];
