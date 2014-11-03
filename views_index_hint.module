@@ -1,0 +1,26 @@
+<?php
+
+/**
+ * @file
+ *
+ * Contains implementation of Views Index Hint.
+ */
+
+
+/**
+ * Implement hook_views_pre_execute().
+ */
+function views_index_hint_views_pre_execute(&$view) {
+  // @TODO: update to get the details from view opton.
+  if ($view->name == 'foo') {
+    /** @var SelectQuery $query */
+    $query =  $view->build_info['query'];
+    // Add the new extender to add index hint.
+    $query_extender = $query->extend('ViewsIndexHint');
+    /** @var ViewsIndexHint $query_extender */
+    $query_extender->setBaseTable($view->base_table)
+      ->setIndexHint('node_status_type');
+    $view->build_info['query'] = $query_extender;
+  }
+
+}

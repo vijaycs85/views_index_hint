@@ -1,1 +1,4 @@
 name = Views Index Hint
+description = Provides option to add index hint to views.
+core = 7.x
+files[] = views_index_hint.class.inc
