@@ -73,8 +73,8 @@ function views_index_hint_form_alter(&$form, &$form_state, $form_id) {
       '#type' => 'textfield',
       '#title' => t('Ignore Index'),
       '#description' => t('Comma separated index names to ignore.'),
-      '#default_value' => $display->handler->get_option('index_hint_force'),
-      '#weight' => 12,
+      '#default_value' => $display->handler->get_option('index_hint_ignore'),
+      '#weight' => 13,
       '#dependency' => array('edit-query-options-index-hint-enabled' => '1'),
     );
 
